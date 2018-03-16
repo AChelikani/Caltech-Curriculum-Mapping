@@ -18,10 +18,6 @@ def viz(course):
     course_name = " ".join(course.split("_"))
     return render_template("viz.html", data_path=url_for('static', filename='data/%s.tsv' % course), course_name = course_name, courses=courses)
 
-@app.route("/graph")
-def graph():
-    return render_template("graph.html", courses=courses)
-
 if __name__ == "__main__":
     app.debug = True
     app.run()

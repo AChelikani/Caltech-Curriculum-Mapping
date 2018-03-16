@@ -45,11 +45,6 @@
                         Home
                     </a>
                 </li>
-                <li>
-                    <a href="/graph">
-                        Experimental
-                    </a>
-                </li>
                 {% for course in courses %}
                 <li>
                     <a href="/viz/{{course}}">{{" ".join(course.split("_"))}}</a>

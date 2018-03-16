@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Caltech CS Curriculum Mapping</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -16,9 +16,33 @@
     <!-- Custom styles for this template -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/simple-sidebar.css') }}">
 
+    <style>
+
+        p {
+            width: 1000px;
+        }
+
+        svg text{
+          fill:grey;
+          font-size:12px;
+        }
+
+        svg .values text{
+          pointer-events:none;
+          stroke-width: 0.1px;
+        }
+
+        .groups:hover{
+          cursor:pointer;
+          font-weight:bold;
+        }
+    </style>
+
 </head>
 
 <body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="http://vizjs.org/viz.v1.1.0.min.js"></script>
 
     <div id="wrapper" class="toggled">
 
@@ -28,11 +52,6 @@
                 <li class="sidebar-brand">
                     <a href="/index">
                         Home
-                    </a>
-                </li>
-                <li>
-                    <a href="/graph">
-                        Experimental
                     </a>
                 </li>
                 {% for course in courses %}
@@ -48,11 +67,17 @@
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <h1>Caltech CS Curriculum Mapping</h1>
+                <svg id="chord"></svg>
                 <p>
                     The order of the Caltech CS Curriculum many not empirically be the best order to take courses. Many courses have related concepts but are often taken in suboptimal order. We surveyed over 150 Caltech students and asked them which classes best prepared them for a set of popular CS classes. 
                 </p>
                 <p>
-                    The left bar shows some of the results we found. Under each course, a histogram shows which other courses students thought helped prepare them for it. In the tab titled 'Experimental', a graph summarizing the data is shown (where every node represents a course, each edge represents student responses that connect two courses together).
+                    The vizualization above shows the results of our survey. You can hover over the label of a class to vizualize which other classes students thought prepared them for the particular class.
+                </p>
+
+                <p>
+                    On the left hand side, you can click on the tabs for each class to see a histogram of the results for that particular class.
+
                 </p>
             </div>
         </div>
@@ -63,6 +88,207 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+var data = [['CS 2', 'CS 1', 93],
+ ['CS 2', 'CS 11', 39],
+ ['CS 2', 'CS 21', 1],
+ ['CS 2', 'CS 38', 4],
+ ['CS 2', 'CS 4', 2],
+ ['CS 2', 'CS 24', 4],
+ ['CS 2', 'EE 51', 2],
+ ['CS 2', 'EE 52', 1],
+ ['CS 2', 'Ma 6a', 1],
+ ['CS 4', 'CS 11', 7],
+ ['CS 4', 'CS 1', 44],
+ ['CS 4', 'CS 2', 23],
+ ['CS 4', 'CS 21', 2],
+ ['CS 4', 'CS 38', 2],
+ ['CS 4', 'CS 24', 1],
+ ['CS 4', 'CS 115', 1],
+ ['CS 11', 'CS 1', 72],
+ ['CS 11', 'CS 2', 22],
+ ['CS 11', 'CS 4', 4],
+ ['CS 11', 'CS 11', 6],
+ ['CS 11', 'CS 21', 3],
+ ['CS 11', 'CS 24', 3],
+ ['CS 11', 'CS 38', 4],
+ ['CS 21', 'Ma 6a', 28],
+ ['CS 21', 'CS 2', 14],
+ ['CS 21', 'Ma 5', 2],
+ ['CS 21', 'CS 4', 4],
+ ['CS 21', 'CS 38', 3],
+ ['CS 21', 'CS 1', 15],
+ ['CS 21', 'Ma 1a', 3],
+ ['CS 21', 'CS 24', 2],
+ ['CS 21', 'CS 11', 3],
+ ['CS 21', 'EE 80abc', 1],
+ ['CS 21', 'Ma 121a', 1],
+ ['CS 24', 'CS 38', 3],
+ ['CS 24', 'CS 2', 45],
+ ['CS 24', 'CS 171', 1],
+ ['CS 24', 'CS 1', 29],
+ ['CS 24', 'CS 11', 42],
+ ['CS 24', 'EE 51', 4],
+ ['CS 24', 'CS 21', 4],
+ ['CS 24', 'CS 4', 3],
+ ['CS 38', 'Ma 6a', 13],
+ ['CS 38', 'CS 2', 12],
+ ['CS 38', 'CS 21', 35],
+ ['CS 38', 'CS 24', 5],
+ ['CS 38', 'CS 1', 10],
+ ['CS 38', 'CS 4', 6],
+ ['CS 38', 'CS 11', 6],
+ ['CS 121', 'CS 4', 2],
+ ['CS 121', 'CS 21', 3],
+ ['CS 121', 'CS 38', 2],
+ ['CS 121', 'CS 1', 21],
+ ['CS 121', 'CS 24', 5],
+ ['CS 121', 'CS 2', 12],
+ ['CS 121', 'CS 11', 4],
+ ['CS 122', 'CS 2', 13],
+ ['CS 122', 'CS 1', 10],
+ ['CS 122', 'CS 4', 3],
+ ['CS 122', 'CS 121', 7],
+ ['CS 122', 'CS 24', 9],
+ ['CS 122', 'CS 11', 4],
+ ['CS 122', 'CS 21', 2],
+ ['CS 122', 'CS 38', 2],
+ ['CS 122', 'CS 124', 2],
+ ['CS 122', 'CS 122', 1],
+ ['CS 144', 'CS 21', 3],
+ ['CS 144', 'CS 1', 13],
+ ['CS 144', 'CS 38', 7],
+ ['CS 144', 'CS 4', 3],
+ ['CS 144', 'CS 2', 7],
+ ['CS 144', 'CS 11', 2],
+ ['CS 144', 'Ma 6a', 4],
+ ['CS 144', 'ACM 116', 1],
+ ['CS 144', 'CS 24', 1],
+ ['CS 155', 'CS 11', 5],
+ ['CS 155', 'CS 1', 30],
+ ['CS 155', 'CS 156a', 29],
+ ['CS 155', 'CS 2', 20],
+ ['CS 155', 'CS 21', 4],
+ ['CS 155', 'CS 24', 6],
+ ['CS 155', 'ACM 116', 1],
+ ['CS 155', 'ACM 104', 2],
+ ['CS 155', 'CS 38', 5],
+ ['CS 155', 'Ma 1b', 2],
+ ['CS 155', 'CS 4', 2],
+ ['CS 155', 'BEM 150', 1],
+ ['CS 156a', 'CS 11', 10],
+ ['CS 156a', 'CS 1', 41],
+ ['CS 156a', 'CS 2', 23],
+ ['CS 156a', 'CS 24', 6],
+ ['CS 156a', 'CS 38', 5],
+ ['CS 156a', 'CS 155', 1],
+ ['CS 156a', 'ACM 116', 1],
+ ['CS 156a', 'Ma 1b', 5],
+ ['CS 156a', 'ACM 104', 1],
+ ['CS 156a', 'Bi 1', 1],
+ ['CS 156a', 'Ma 1c', 1],
+ ['CS 156a', 'Ma 2', 1],
+ ['CS 156a', 'CS 4', 2],
+ ['CS 156a', 'CS 21', 4],
+ ['CS 156a', 'Ma 3', 2],
+ ['CS 171', 'CS 2', 10],
+ ['CS 171', 'CS 21', 2],
+ ['CS 171', 'CS 38', 1],
+ ['CS 171', 'CS 1', 7],
+ ['CS 171', 'CS 24', 4],
+ ['CS 171', 'CS 11', 5],
+ ['CS 171', 'CS 122', 1],
+ ['CS 171', 'CS 124', 1],
+ ['CS 171', 'CS 4', 1]];
+
+var colors = {
+'ACM 104':"#000000",
+'ACM 116':"#d3d7cf",
+'BEM 150':"#3465a4", //
+'Bi 1':"#5c3566", //
+'CS 1':"#ce58c0",
+'CS 11':"#50a26e",
+'CS 115':"#d1434b",
+'CS 121':"#45c0bc",
+'CS 122':"#ce5929",
+'CS 124':"#4e7bda",
+'CS 144':"#d49d3c",
+'CS 155':"#6660a3",
+'CS 156a':"#7b853c",
+'CS 171':"#b58dde",
+'CS 2':"#97622e",
+'CS 21':"#609dd6",
+'CS 24':"#e29074",
+'CS 38':"#9c4b88",
+'CS 4':"#ab505f",
+'EE 51':"#dc85b6",
+'EE 52':"#fcaf3e", //
+'EE 80abc':"#8f5902", //
+'Ma 121a':"#fce94f", //
+'Ma 1a':"#ef2929", //
+'Ma 1b':"#729fcf", //
+'Ma 1c':"#aab740",
+'Ma 2':"#5ab449",
+'Ma 3':"#7f5acd",
+'Ma 5':"#8ae234", //
+'Ma 6a':"#da4480"
+}
+
+var sortOrder =[
+'ACM 104',
+'ACM 116',
+'BEM 150',
+'Bi 1',
+'CS 1',
+'CS 11',
+'CS 115',
+'CS 121',
+'CS 122',
+'CS 124',
+'CS 144',
+'CS 155',
+'CS 156a',
+'CS 171',
+'CS 2',
+'CS 21',
+'CS 24',
+'CS 38',
+'CS 4',
+'EE 51',
+'EE 52',
+'EE 80abc',
+'Ma 121a',
+'Ma 1a',
+'Ma 1b',
+'Ma 1c',
+'Ma 2',
+'Ma 3',
+'Ma 5',
+'Ma 6a'
+];
+
+function sort(a,b){ return d3.ascending(sortOrder.indexOf(a),sortOrder.indexOf(b)); }
+
+var ch = viz.ch().data(data)
+      .padding(.04)
+      .sort(sort)
+      .innerRadius(322)
+      .outerRadius(337)
+      .duration(600)
+      .chordOpacity(0.3)
+      .labelPadding(.03)
+      .fill(function(d){ return colors[d];});
+
+var width=1500, height=730;
+
+var svg = d3.select("#chord").attr("height",height).attr("width",width);
+
+svg.append("g").attr("transform", "translate(450,360)").call(ch);
+
+// adjust height of frame in bl.ocks.org
+d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");     
+</script>
 
 </body>
 
