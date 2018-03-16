@@ -8,13 +8,28 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>{{ course_name }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/simple-sidebar.css') }}">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <style>
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: brown;
+    }
+
+    .axis--x path {
+      display: none;
+    }
+    </style>
 
 </head>
 
@@ -47,13 +62,9 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <h1>Caltech CS Curriculum Mapping</h1>
-                <p>
-                    The order of the Caltech CS Curriculum many not empirically be the best order to take courses. However, many courses have related concepts but are often taken in suboptimal order. We surveyed over 150 Caltech students and asked them which classes best prepared them for a set of popular CS classes. 
-                </p>
-                <p>
-                    The left bar shows some of the results we found. Under each course, a histogram shows which courses other students thought helped prepare for them. In the tab titled 'experimental', a graph summarizing the data is shown (where every node represents a course, each edge represents their response that connect two courses together).
-                </p>
+                <h1>{{ course_name }}</h1>
+                <br/>
+                <svg width="1000" height="600"></svg>
             </div>
         </div>
         <!-- /#page-content-wrapper -->
@@ -64,6 +75,10 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <iframe width="100%" height="480px" src="https://rhumbl.com/embed/5a864be44bbe4a0010f6803c"></iframe>
+
 </body>
+
+
 
 </html>
