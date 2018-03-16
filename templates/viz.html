@@ -127,18 +127,19 @@ d3.tsv("{{ data_path }}", function(d) {
   svg.append("text")             
       .attr("transform",
             "translate(" + (width/2) + " ," + 
-                           (height + margin.top + 20) + ")")
+                           (height + margin.top + 28) + ")")
       .style("text-anchor", "middle")
-      .text("Class");
+      .text("Suggested Prequisite or Requisite Class");
 
   // text label for the y axis
   svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x",0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Number of Responses");   
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 2)
+    .attr("x",margin.top - (height / 2))
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Number of Responses");
 });
 
 </script>

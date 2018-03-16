@@ -50,6 +50,7 @@
                         Experimental
                     </a>
                 </li>
+                
                 {% for course in courses %}
                 <li>
                     <a href="/viz/{{course}}">{{" ".join(course.split("_"))}}</a>
@@ -62,11 +63,15 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <h1>{{ course_name }}</h1>
+                <h1>Experimental Graph</h1>
                 <br/>
-                <svg width="1000" height="600"></svg>
+                <p>
+                  This graph summarizes data taken from a survey of over 150 Caltech students.  Every node represents a course, and each edge student responses connecting two courses together. The classes are also clustered based on their discipline.
+                </p>
+                <iframe width="100%" height="480px" src="https://rhumbl.com/embed/5aa24d4279e7fe0010f909a7"></iframe>
             </div>
         </div>
+
         <!-- /#page-content-wrapper -->
 
     </div>
@@ -75,7 +80,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <iframe width="100%" height="480px" src="https://rhumbl.com/embed/5a864be44bbe4a0010f6803c"></iframe>
+
 
 </body>
 
